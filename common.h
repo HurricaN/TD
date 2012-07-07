@@ -1,6 +1,6 @@
 #ifndef COMMON_H_
 #define COMMON_H_
-
+//coucou
 #include <cstdio>
 #include <string>
 #include <vector>
