@@ -39,6 +39,10 @@ void Map::init()
 			collisionMap[x][y][TOURABLE] = 1;
 }
 
+bool Map::valide(position pos)
+{
+	return pos.x >= 0 && pos.x < mapDim.first && pos.y >= 0 && pos.y < mapDim.second;
+}
 
 bool Map::load(const char *mapName)
 {
@@ -56,10 +60,28 @@ bool Map::load(const char *mapName)
 	spawn.push_back(position(x,y));
 	tilesetNameForLayer[L_SOL] = tilesetName;
    
-   for(int y = 0 ; y < mapDim.second ; y++)
-		for(int x = 0 ; x < mapDim.first ; x++)
-         fscanf(mapFile, "%d", &iTileOnCase[L_SOL][x][y]);
-   
+	for(int x = 0 ; x < mapDim.first ; x++)
+		for(int y = 0 ; y < mapDim.second ; y++)
+         fscanf(mapFile, "%d", &iTileOnCase[L_SOL][y][x]);
+	
+	char collStr[MAP_DIM_MAX][MAP_DIM_MAX*11+1];
+	for(int iLig = 0 ; iLig < mapDim.second ; iLig++)
+		fscanf(mapFile, "%s", collStr[iLig]);
+	
+	for(int iLig = 0 ; iLig < mapDim.second ; iLig++)
+	{
+		int iPos = 1;
+		for(int iCol = 0 ; iCol < mapDim.first ; iCol++)
+		{
+			for(int iDir = 0 ; iDir < 5 ; iDir++)
+			{
+				collisionMap[iCol][iLig][iDir] = collStr[iLig][iPos]-'0';
+				iPos+=2;
+			}
+			iPos++;
+		}
+	}
+	
    fclose(mapFile);
    return true;
 }
@@ -109,7 +131,11 @@ void Map::save(const char *mapName)
 		{
 			fprintf(mapFile, "(");
 			for(int iDir = 0 ; iDir < 5 ; iDir++)
-				fprintf(mapFile, "%d,", collisionMap[x][y][iDir]);
+			{
+				fprintf(mapFile, "%d", collisionMap[x][y][iDir]);
+				if(iDir != 4)
+					fprintf(mapFile, ",");
+			}
 			fprintf(mapFile, ")");
 		}
       fprintf(mapFile, "\n");

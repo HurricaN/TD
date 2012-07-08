@@ -13,8 +13,8 @@ game::game()
 	mainMobManager.setRW(&mainWindow);
 	
 	/*TEMPORAIRE*/
-	mainMobManager.spawn = mainMap.spawn;
-	mainMobManager.start = mainMap.start;
+	mainMobManager.mainMap = &mainMap;
+	mainMobManager.calculeMainChemin();
 }
 
 void game::run()

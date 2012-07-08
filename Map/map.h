@@ -27,6 +27,8 @@ class Map
 	inline int getWidth() { return mapDim.first; }
 	pixPosition getStart() { return start; }
    
+	bool valide(position pos);
+	
 	bool isFlipable(position where, int direction)
 	{
 		where += basic_dep[direction];
@@ -38,7 +40,6 @@ class Map
    
    /*A SOCCUPER DE*/
 	vector<position> spawn;
-	pixPosition start;
    
    protected :
    
@@ -46,6 +47,7 @@ class Map
 	dimension mapDim;
 	int space;
 	string finalMapPath;
+	pixPosition start;
 	
    private :
    

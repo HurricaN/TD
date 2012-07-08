@@ -53,9 +53,13 @@ void SFMLMap::setSprite(Sprite spr, position at, int layer)
 
 void SFMLMap::cutTileset()
 {
-   for(int y = 0 ; y < mapDim.second ; y++)
-      for(int x = 0 ; x < mapDim.first ; x++)
+	for(int x = 0 ; x < mapDim.first ; x++)
+		for(int y = 0 ; y < mapDim.second ; y++)
+		{
+			if(x == 3 && y == 0)
+				printf("iTile : %d\n", getiTile(position(x,y)));
          setSprite(getiTile(position(x,y)), position(x,y));
+		}
 }
 
 void SFMLMap::setSpriteFromSelector()
@@ -84,8 +88,8 @@ void SFMLMap::flipCollAndCol(position where, int direction)
 
 void SFMLMap::draw()
 {
-	for(int y = 0 ; y < mapDim.second ; y++)
-		for(int x = 0 ; x < mapDim.first ; x++)
+	for(int x = 0 ; x < mapDim.first ; x++)
+		for(int y = 0 ; y < mapDim.second ; y++)
 			App->Draw(getSprite(position(x,y)));
 	
 	if(showGrille)

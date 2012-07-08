@@ -12,7 +12,7 @@
 
 #include "common.h"
 #include "mob.h"
-#include "map.h"
+#include "SFMLMap.h"
 #include "ImageManager.h"
 
 using namespace std;
@@ -25,20 +25,21 @@ class mobManager
 		
 		inline void setRW(RenderWindow* pApp) { App = pApp; }
 		
+		pixPosition convertSpawnPos(position pos);
 		void popMobs(string mobDefName, int n=1);
 		static void setImgManager(ImageManager *mgr) { imgManager = mgr; }
 		
+		void calculeMainChemin();
+		
 		void draw();
 		
-		/*A s'occuper de*/
-		vector<position> spawn;
-		pixPosition start;
-		
+		SFMLMap* mainMap;
 	private:
 	
 		set<mob> mobList;
 		static ImageManager* imgManager;
 		RenderWindow* App;
+		vector<pair<position, pair<int,int> > > mainChemin;
 };
 
 #endif

@@ -11,6 +11,7 @@
 #define DEF_MOB_H
 
 #include "common.h"
+#include "mobAttributes.h"
 #include <SFML/Graphics.hpp>
 
 using namespace sf;
@@ -20,7 +21,7 @@ class mob
 	public:
 	
 		mob() :  mobDefName(""), pos(pixPosition()) {}
-		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) {}
+		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) { attributes.velocity = 1; }
 	
 		void loadCharset(Image* img);
 		bool operator < (const mob& autre) const
@@ -29,6 +30,9 @@ class mob
 		}
 	
 		Sprite mobS;
+		mobAttributes attributes;
+		vector<position> trajectoire;
+		
 	private: 
 	
 		string charsetName, mobDefName;
