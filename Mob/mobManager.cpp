@@ -63,7 +63,7 @@ void mobManager::popMobs(string mobDefName, int n)
 	newMob.pos = pixPosition(milieu.x, mainMap->getStart().y);
 	pixPosition currPos = newMob.pos;
 	newMob.trajectoire.push_back(make_pair(newMob.pos,make_pair(orientationInitiale(mainMap->spawn[0]),orientationInitiale(mainMap->spawn[0]))));
-	for(int iCase = 0 ; iCase < 1 ; iCase++)
+	for(int iCase = 0 ; iCase < mainChemin.size() ; iCase++)
 	{
 		while(!milieuAtteint(currPos,mainChemin[iCase].first,mainChemin[iCase].second.first))
 		{
@@ -82,6 +82,25 @@ void mobManager::popMobs(string mobDefName, int n)
 			newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
 			delete[] ordreDeTest;
 		}
+		
+		while(isInRect(currPos,mainMap->getCaseRect(mainChemin[iCase].first)))
+		{
+			int *ordreDeTest = genMelangeAleatoire(4);
+			pixPosition voisin = currPos+(basic_dep[mainChemin[iCase].second.second]*newMob.attributes.velocity);
+			for(int i = 0 ; i < 4 ; i++)
+			{
+				if(ordreDeTest[i] == opposite(mainChemin[iCase].second.second))
+					continue;
+				voisin += basic_dep[ordreDeTest[i]]*newMob.attributes.velocity;
+				if(isInRect(voisin,mainMap->getCaseRect(mainChemin[iCase].first)))
+					break;
+			}
+			
+			currPos = voisin;
+			newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
+			delete[] ordreDeTest;
+		}
+
 	}
 	
 	mobList.insert(newMob);
