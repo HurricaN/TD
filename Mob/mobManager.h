@@ -25,7 +25,7 @@ class mobManager
 		
 		inline void setRW(RenderWindow* pApp) { App = pApp; }
 		
-		void popMobs(string charset, string desc, int n=1);
+		void popMobs(string mobDefName, int n=1);
 		static void setImgManager(ImageManager *mgr) { imgManager = mgr; }
 		
 		void draw();

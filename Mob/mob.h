@@ -15,21 +15,24 @@
 
 using namespace sf;
 
-struct mob
+class mob
 {
-	string charset, desc;
-	pixPosition pos;
-	Sprite mobS;
+	public:
 	
-	void loadSprite(Image* img);
+		mob() :  mobDefName(""), pos(pixPosition()) {}
+		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) {}
 	
-	mob() : charset(""), desc(""), pos(pixPosition()) {}
-	mob(string charset, string desc, pixPosition pos) : charset(charset), desc(desc), pos(pos) {}
+		void loadCharset(Image* img);
+		bool operator < (const mob& autre) const
+		{
+			return pos.x < autre.pos.x;
+		}
 	
-	bool operator < (const mob& autre) const
-	{
-		return pos.x < autre.pos.x;
-	}
+		Sprite mobS;
+	private: 
+	
+		string charsetName, mobDefName;
+		pixPosition pos;
 };
 
 #endif

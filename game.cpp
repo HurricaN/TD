@@ -19,7 +19,7 @@ game::game()
 
 void game::run()
 {
-	mainMobManager.popMobs("1.png", "");
+	mainMobManager.popMobs("1.mob", 1);
    while(isRunning)
    {
 		Event event;

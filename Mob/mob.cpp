@@ -9,7 +9,7 @@
 
 #include "mob.h"
 
-void mob::loadSprite(Image* img)
+void mob::loadCharset(Image* img)
 {
 	mobS.SetPosition(to2<float>(pos));
 	img->CreateMaskFromColor(img->GetPixel(0,0),0);

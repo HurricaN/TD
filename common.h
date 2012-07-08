@@ -15,7 +15,8 @@ using namespace sf;
 static string mapPath("datas/maps/");
 static string tilesetPath("datas/maps/tilesets/");
 static string mobCharsetPath("datas/mobs/charsets/");
-static string mobDescPath("datas/mobs/descs/");
+static string mobCharsetDefPath("datas/mobs/charsetsDef/");
+static string mobDefPath("datas/mobs/mobDef/");
 
 static const int INFINI = 1e9;
 
