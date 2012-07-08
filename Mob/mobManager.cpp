@@ -79,6 +79,7 @@ void mobManager::popMobs(string mobDefName, int n)
 			}
 			
 			currPos = voisin;
+			
 			newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
 			delete[] ordreDeTest;
 		}
@@ -97,7 +98,8 @@ void mobManager::popMobs(string mobDefName, int n)
 			}
 			
 			currPos = voisin;
-			newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
+			if(isInRect(currPos,mainMap->getCaseRect(mainChemin[iCase].first)))
+				newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
 			delete[] ordreDeTest;
 		}
 
