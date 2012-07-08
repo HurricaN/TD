@@ -2,9 +2,10 @@
 
 int main(int argc, const char * argv[])
 {
-    game TD;
-    TD.run();
+	srand(time(NULL)); 
+	game TD;
+	TD.run();
     
-    return 0;
+	return 0;
 }
 

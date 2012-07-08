@@ -19,7 +19,7 @@ game::game()
 
 void game::run()
 {
-	mainMobManager.popMobs("1.mob", 1);
+	mainMobManager.popMobs("1.mob", 3);
    while(isRunning)
    {
 		Event event;

@@ -21,7 +21,7 @@ class mob
 	public:
 	
 		mob() :  mobDefName(""), pos(pixPosition()) {}
-		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) { attributes.velocity = 4; }
+		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) { attributes.velocity = 1; }
 	
 		void loadCharset(Image* img);
 		bool operator < (const mob& autre) const

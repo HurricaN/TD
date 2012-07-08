@@ -55,12 +55,17 @@ int orientationInitiale(position pos)
 
 void mobManager::popMobs(string mobDefName, int n)
 {
+	for(int iMob = 0 ; iMob < n ; iMob++)
+	{
 	mob newMob(mobDefName, convertSpawnPos(mainMap->spawn[0]));
 	
 	/*GENERATION DE TRAJECTOIRE*/
 	IntRect rectCase = mainMap->getCaseRect(mainMap->spawn[0]);
 	pixPosition milieu = pixPosition((rectCase.Right+rectCase.Left)/2,(rectCase.Top+rectCase.Bottom)/2);
-	newMob.pos = pixPosition(milieu.x, mainMap->getStart().y);
+	int coeff = rand()%10;
+	if(rand()%2)
+		coeff*=-1;
+	newMob.pos = pixPosition(milieu.x+coeff, mainMap->getStart().y);
 	pixPosition currPos = newMob.pos;
 	newMob.trajectoire.push_back(make_pair(newMob.pos,make_pair(orientationInitiale(mainMap->spawn[0]),orientationInitiale(mainMap->spawn[0]))));
 	for(int iCase = 0 ; iCase < mainChemin.size() ; iCase++)
@@ -106,6 +111,7 @@ void mobManager::popMobs(string mobDefName, int n)
 	}
 	
 	mobList.insert(newMob);
+	}
 }
 
 void mobManager::calculeMainChemin()
@@ -149,9 +155,14 @@ void mobManager::draw()
 
 void mobManager::drawTrajectoire()
 {
+	Color c[3] = {Color::Red, Color::Black, Color::Blue};
+	int iC = 0;
 	for(set<mob>::iterator curr = mobList.begin() ; curr != mobList.end() ; ++curr)
+	{
 		for(int i = 0 ; i < curr->trajectoire.size() ; i++)
-			App->Draw(Shape::Circle(to2<float>(curr->trajectoire[i].first),1,Color::Red));
+			App->Draw(Shape::Circle(to2<float>(curr->trajectoire[i].first),1,c[iC]));
+		iC++;
+	}
 }
 
 
