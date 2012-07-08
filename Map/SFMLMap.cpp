@@ -37,6 +37,11 @@ IntRect SFMLMap::getTileRect(int iTile)
    return IntRect(pixPosOut.x, pixPosOut.y, (pixPosOut + 1).x, (pixPosOut + 1).y);
 }
 
+IntRect SFMLMap::getCaseRect(position posCase)
+{
+	return IntRect(positionToPixPosition(posCase,start).x,positionToPixPosition(posCase,start).y,positionToPixPosition(posCase+1,start).x,positionToPixPosition(posCase+1,start).y);
+}
+
 void SFMLMap::setSprite(int iTile, position at, int layer)
 {
    Sprite spr;

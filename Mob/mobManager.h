@@ -30,8 +30,10 @@ class mobManager
 		static void setImgManager(ImageManager *mgr) { imgManager = mgr; }
 		
 		void calculeMainChemin();
+		bool milieuAtteint(pixPosition pos, position posCase, int orientationDebut);
 		
 		void draw();
+		void drawTrajectoire();
 		
 		SFMLMap* mainMap;
 	private:

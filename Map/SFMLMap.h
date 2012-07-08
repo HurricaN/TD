@@ -34,6 +34,7 @@ public:
 	void moveSelector(int& x, int& y);
 	void moveAndSetFromSelector(position pos, bool set = true);
 	IntRect getTileRect(int iTile);
+	IntRect getCaseRect(position posCase);
 	void switchSelector() { Select.setActive(!Select.isActive()); }
 	void cutTileset();
 	void giveTile(SFMLMap* cible);

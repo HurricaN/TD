@@ -132,6 +132,12 @@ struct pixPosition
    {
       return pixPosition(x + a*TILE_DIM, y + a*TILE_DIM);
    }
+	
+	pixPosition operator*(int a)
+   {
+      return pixPosition(x*a, y*a);
+   }
+   
    
    pixPosition& operator+=(deplacement<int> a)
    {
@@ -140,6 +146,11 @@ struct pixPosition
       return *this;
    }
    
+	pixPosition operator+(deplacement<int> a)
+   {
+	   return pixPosition(x+a.x, y+a.y);
+   }
+
    
    pixPosition operator+(pixPosition rightOp)
    {
@@ -214,5 +225,25 @@ enum event_type
    DRAW_TEXT = 0,
 };
 
+static int* genMelangeAleatoire(int n)
+{
+	int *tab = new int[n];
+	for(int i = 0 ; i < n ; i++)
+		tab[i] = i;
+	for(int i = 0 ; i < n ; i++)
+	{
+		int swapI = rand()%n;
+		int tmp = tab[swapI];
+		tab[swapI] = tab[i];
+		tab[i] = tmp;
+	}
+	
+	return tab;
+}
+
+static bool isInRect(pixPosition p, IntRect r)
+{
+	return p.x >= r.Left && p.x <= r.Right && p.y >= r.Top && p.y <= r.Bottom;
+}
 
 #endif /* COMMON_H_ */

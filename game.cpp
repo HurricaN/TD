@@ -36,6 +36,7 @@ void game::run()
 		mainWindow.Clear();
 		mainMap.draw();
 		mainMobManager.draw();
+		mainMobManager.drawTrajectoire();
 		mainWindow.Display();
    }
 }

@@ -19,12 +19,30 @@ pixPosition mobManager::convertSpawnPos(position pos)
 	return toReturn;
 }
 
-void mobManager::popMobs(string mobDefName, int n)
+bool mobManager::milieuAtteint(pixPosition pos, position posCase, int orientationDebut)
 {
-	mob newMob(mobDefName, convertSpawnPos(mainMap->spawn[0]));
+	IntRect rectCase = mainMap->getCaseRect(posCase);
+	pixPosition milieu = pixPosition((rectCase.Right+rectCase.Left)/2,(rectCase.Top+rectCase.Bottom)/2);
 	
-	/*GENERATION DE TRAJECTOIRE*/
-	
+	switch(orientationDebut)
+	{
+		case DOWN:
+			return pos.y >= milieu.y;
+			break;
+		case UP:
+			return pos.y <= milieu.y;
+			break;
+		case RIGHT:
+			return pos.x >= milieu.x;
+			break;
+		case LEFT:
+			return pos.x <= milieu.x;
+			break;
+		
+		default:
+			return 0;
+			break;
+	}
 }
 
 int orientationInitiale(position pos)
@@ -32,6 +50,41 @@ int orientationInitiale(position pos)
 	if(pos.y == 0)
 		return DOWN;
 	return UP;
+}
+
+
+void mobManager::popMobs(string mobDefName, int n)
+{
+	mob newMob(mobDefName, convertSpawnPos(mainMap->spawn[0]));
+	
+	/*GENERATION DE TRAJECTOIRE*/
+	IntRect rectCase = mainMap->getCaseRect(mainMap->spawn[0]);
+	pixPosition milieu = pixPosition((rectCase.Right+rectCase.Left)/2,(rectCase.Top+rectCase.Bottom)/2);
+	newMob.pos = pixPosition(milieu.x, mainMap->getStart().y);
+	pixPosition currPos = newMob.pos;
+	newMob.trajectoire.push_back(make_pair(newMob.pos,make_pair(orientationInitiale(mainMap->spawn[0]),orientationInitiale(mainMap->spawn[0]))));
+	for(int iCase = 0 ; iCase < 1 ; iCase++)
+	{
+		while(!milieuAtteint(currPos,mainChemin[iCase].first,mainChemin[iCase].second.first))
+		{
+			int *ordreDeTest = genMelangeAleatoire(4);
+			pixPosition voisin = currPos+(basic_dep[mainChemin[iCase].second.first]*newMob.attributes.velocity);
+			for(int i = 0 ; i < 4 ; i++)
+			{
+				if(ordreDeTest[i] == opposite(mainChemin[iCase].second.first))
+					continue;
+				voisin += basic_dep[ordreDeTest[i]]*newMob.attributes.velocity;
+				if(isInRect(voisin,mainMap->getCaseRect(mainChemin[iCase].first)))
+					break;
+			}
+			
+			currPos = voisin;
+			newMob.trajectoire.push_back(make_pair(currPos,make_pair(mainChemin[iCase].second.first,mainChemin[iCase].second.first)));
+			delete[] ordreDeTest;
+		}
+	}
+	
+	mobList.insert(newMob);
 }
 
 void mobManager::calculeMainChemin()
@@ -64,6 +117,7 @@ void mobManager::calculeMainChemin()
 		}
 		mainChemin.push_back(make_pair(curr.first,make_pair(curr.second, voisin.second)));
 	}
+	printf("%d\n", mainChemin[0].second.first);
 }
 
 void mobManager::draw()
@@ -71,3 +125,12 @@ void mobManager::draw()
 	for(set<mob>::iterator curr = mobList.begin() ; curr != mobList.end() ; ++curr)
 		App->Draw(curr->mobS);
 }
+
+void mobManager::drawTrajectoire()
+{
+	for(set<mob>::iterator curr = mobList.begin() ; curr != mobList.end() ; ++curr)
+		for(int i = 0 ; i < curr->trajectoire.size() ; i++)
+			App->Draw(Shape::Circle(to2<float>(curr->trajectoire[i].first),1,Color::Red));
+}
+
+

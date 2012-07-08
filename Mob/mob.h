@@ -21,7 +21,7 @@ class mob
 	public:
 	
 		mob() :  mobDefName(""), pos(pixPosition()) {}
-		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) { attributes.velocity = 1; }
+		mob(string mobDefName, pixPosition pos) : mobDefName(mobDefName), pos(pos) { attributes.velocity = 4; }
 	
 		void loadCharset(Image* img);
 		bool operator < (const mob& autre) const
@@ -31,12 +31,12 @@ class mob
 	
 		Sprite mobS;
 		mobAttributes attributes;
-		vector<position> trajectoire;
+		vector<pair<pixPosition,pair<int,int> > > trajectoire;
+		pixPosition pos;
 		
 	private: 
 	
 		string charsetName, mobDefName;
-		pixPosition pos;
 };
 
 #endif
