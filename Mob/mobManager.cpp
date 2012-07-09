@@ -55,23 +55,47 @@ int orientationInitiale(position pos)
 
 void mobManager::popMobs(string mobDefName, int n)
 {
+
+
 	for(int iMob = 0 ; iMob < n ; iMob++)
 	{
 	mob newMob(mobDefName, convertSpawnPos(mainMap->spawn[0]));
 	
 	/*GENERATION DE TRAJECTOIRE*/
+	
+	/*Concept : on divise les cases en deux par rapport au milieu, on a une orientation en entrant dans la case
+	et une en sortant de milieu, c'est pour gerer les angles et ca permettra de changer facilement l'animation quand y'a un tournant.
+	
+	Donc la trajectoire c'est un vector de pair qui contient 1 : la position à l'instant t
+	2 : une paire d'orientation : l'orientation que j'ai quand j'entre dans la case et celle quand je sors
+	
+	*/
+	
+	
+	//Case du mileu
 	IntRect rectCase = mainMap->getCaseRect(mainMap->spawn[0]);
 	pixPosition milieu = pixPosition((rectCase.Right+rectCase.Left)/2,(rectCase.Top+rectCase.Bottom)/2);
+	
+	
+	//Les trajectoires sont bien gérées (juste les bails pour la case de départ cf en dessous) quand la case de spawn est en en haut, il faut généraliser le machin, pas très dur
+	//Pour placer la premiere position de maniere random : on ajoute + ou - un nombre entre 1 et 10 au x du milieu
 	int coeff = rand()%10;
 	if(rand()%2)
 		coeff*=-1;
+	//Premiere position du mob
 	newMob.pos = pixPosition(milieu.x+coeff, mainMap->getStart().y);
 	pixPosition currPos = newMob.pos;
+	
+	//qu'on ajoute à la trajectoire
 	newMob.trajectoire.push_back(make_pair(newMob.pos,make_pair(orientationInitiale(mainMap->spawn[0]),orientationInitiale(mainMap->spawn[0]))));
+	
+	//Pour chaque case du chemin qu'on a trouvé avec calculeMainChemin() on va trouver des points aléatoires à la trajectoire en deux parties, 
+	//D'abord du début au milieu puis du milieu à la fin de la case
 	for(int iCase = 0 ; iCase < mainChemin.size() ; iCase++)
 	{
 		while(!milieuAtteint(currPos,mainChemin[iCase].first,mainChemin[iCase].second.first))
 		{
+			//Ordre aléatoire pour les directions : donne l'aspect aléatoire à la trajectoire
 			int *ordreDeTest = genMelangeAleatoire(4);
 			pixPosition voisin = currPos+(basic_dep[mainChemin[iCase].second.first]*newMob.attributes.velocity);
 			for(int i = 0 ; i < 4 ; i++)

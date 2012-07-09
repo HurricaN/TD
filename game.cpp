@@ -12,8 +12,9 @@ game::game()
 	
 	mainMobManager.setRW(&mainWindow);
 	
-	/*TEMPORAIRE*/
 	mainMobManager.mainMap = &mainMap;
+	
+	//Cette fonction trouve les cases du chemin, ca ne calcule pas la trajectoire des mobs
 	mainMobManager.calculeMainChemin();
 }
 
