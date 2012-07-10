@@ -79,7 +79,7 @@ void mobManager::popMobs(string mobDefName, int n)
 	
 	//Les trajectoires sont bien gérées (juste les bails pour la case de départ cf en dessous) quand la case de spawn est en en haut, il faut généraliser le machin, pas très dur
 	//Pour placer la premiere position de maniere random : on ajoute + ou - un nombre entre 1 et 10 au x du milieu
-	int coeff = rand()%10;
+	int coeff = rand()%5;
 	if(rand()%2)
 		coeff*=-1;
 	//Premiere position du mob
@@ -168,7 +168,6 @@ void mobManager::calculeMainChemin()
 		}
 		mainChemin.push_back(make_pair(curr.first,make_pair(curr.second, voisin.second)));
 	}
-	printf("%d\n", mainChemin[0].second.first);
 }
 
 void mobManager::draw()
