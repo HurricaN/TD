@@ -1,6 +1,6 @@
 #include "game.h"
 
-game::game()
+ame::game()
 {
    isRunning = true;
 	mainWindow.Create(VideoMode(GAME_W,GAME_H), "Tower Defense");
