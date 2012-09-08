@@ -10,10 +10,10 @@
 #ifndef DEF_MOBMANAGER_H
 #define DEF_MOBMANAGER_H
 
-#include "common.h"
+#include "../common.h"
 #include "mob.h"
-#include "SFMLMap.h"
-#include "ImageManager.h"
+#include "../Map/SFMLMap.h"
+#include "../Extincludes/ImageManager.h"
 
 using namespace std;
 

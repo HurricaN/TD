@@ -4,9 +4,9 @@
 #include <cstdio>
 #include "common.h"
 
-#include "SFMLMap.h"
+#include "Map/SFMLMap.h"
 #include "Extincludes/RessourceManager.h"
-#include "mobManager.h"
+#include "Mob/mobManager.h"
 
 using namespace sf;
 

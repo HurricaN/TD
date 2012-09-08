@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "map.h"
-#include "ImageManager.h"
+#include "../Extincludes/ImageManager.h"
 #include "grider.h"
 #include "Selector.h"
 using namespace sf;

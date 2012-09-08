@@ -10,7 +10,7 @@
 #ifndef DEF_MOB_H
 #define DEF_MOB_H
 
-#include "common.h"
+#include "../common.h"
 #include "mobAttributes.h"
 #include <SFML/Graphics.hpp>
 
